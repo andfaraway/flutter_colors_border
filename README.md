@@ -1,2 +1,8 @@
 # flutter_colors_border
-五彩斑斓的边框
+
+A new flutter colorful border widget!
+
+![Image text](https://github.com/andfaraway/flutter_colors_border/blob/master/example.gif)
+
+
+
