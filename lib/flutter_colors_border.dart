@@ -7,18 +7,20 @@ class FlutterColorsBorder extends StatefulWidget {
   final Size size;
   final bool animation;
   final int animationDuration;
+  final double? boardRadius;
 
   final List<Color>? colors;
   final double borderWidth;
 
   const FlutterColorsBorder(
       {Key? key,
-        required this.child,
-        required this.size,
-        this.colors,
-        this.borderWidth = 2,
-        this.animation = true,
-        this.animationDuration = 5})
+      required this.child,
+      required this.size,
+      this.colors,
+      this.borderWidth = 2,
+      this.animation = true,
+      this.animationDuration = 5,
+      this.boardRadius = 5})
       : super(key: key);
 
   @override
@@ -46,7 +48,15 @@ class _FlutterColorsBorderState extends State<FlutterColorsBorder>
 
     colors = widget.colors;
     if (colors == null) {
-      colors = [Colors.red,Colors.orange,Colors.yellow,Colors.green,Colors.blue,Colors.indigo,Colors.purple];
+      colors = [
+        Colors.red,
+        Colors.orange,
+        Colors.yellow,
+        Colors.green,
+        Colors.blue,
+        Colors.indigo,
+        Colors.purple
+      ];
     }
   }
 
@@ -60,7 +70,8 @@ class _FlutterColorsBorderState extends State<FlutterColorsBorder>
           widget.child,
           CustomPaint(
             size: widget.size,
-            painter: _BorderPainter(_ctl!, colors!, widget.borderWidth),
+            painter: _BorderPainter(_ctl!, colors!, widget.borderWidth,
+                boardRadius: widget.boardRadius!),
           )
         ],
       ),
@@ -70,12 +81,15 @@ class _FlutterColorsBorderState extends State<FlutterColorsBorder>
 
 class _BorderPainter extends CustomPainter {
   final List<Color> colors;
+  final double boardRadius;
 
   final AnimationController ctl;
 
   final double strokeWidth;
 
-  _BorderPainter(this.ctl, this.colors, this.strokeWidth) : super(repaint: ctl);
+  _BorderPainter(this.ctl, this.colors, this.strokeWidth,
+      {this.boardRadius = 5})
+      : super(repaint: ctl);
 
   Paint _paint = Paint()..style = PaintingStyle.stroke;
 
@@ -100,13 +114,13 @@ class _BorderPainter extends CustomPainter {
         RRect.fromRectAndRadius(
             Rect.fromCenter(
                 center: center_pos, width: size.width, height: size.height),
-            Radius.circular(5)),
+            Radius.circular(boardRadius)),
         RRect.fromRectAndRadius(
             Rect.fromCenter(
                 center: center_pos,
                 width: size.width - 2,
                 height: size.height - 2),
-            Radius.circular(5)),
+            Radius.circular(boardRadius)),
         _paint);
   }
 

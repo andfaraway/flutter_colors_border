@@ -24,6 +24,7 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: FlutterColorsBorder(
           size: Size(100,100),
+          boardRadius: 5,
           child: Center(
             child: Text('hello'),
           ),
