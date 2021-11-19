@@ -9,7 +9,7 @@ class FlutterColorsBorder extends StatefulWidget {
   final int animationDuration;
   final double boardRadius;
 
-  final List<Color>? colors;
+  final List<Color> colors;
   final double borderWidth;
   final bool available;
 
@@ -17,7 +17,15 @@ class FlutterColorsBorder extends StatefulWidget {
       {Key? key,
         required this.child,
         required this.size,
-        this.colors,
+        this.colors = const [
+          Colors.red,
+          Colors.orange,
+          Colors.yellow,
+          Colors.green,
+          Colors.blue,
+          Colors.indigo,
+          Colors.purple
+        ],
         this.borderWidth = 2,
         this.animation = true,
         this.animationDuration = 5,
@@ -33,7 +41,7 @@ class _FlutterColorsBorderState extends State<FlutterColorsBorder>
     with SingleTickerProviderStateMixin {
   AnimationController? _ctl;
 
-  List<Color>? colors;
+  late List<Color> colors;
 
   @override
   void initState() {
@@ -48,15 +56,12 @@ class _FlutterColorsBorderState extends State<FlutterColorsBorder>
     }
 
     colors = widget.colors;
-    colors ??= [
-      Colors.red,
-      Colors.orange,
-      Colors.yellow,
-      Colors.green,
-      Colors.blue,
-      Colors.indigo,
-      Colors.purple
-    ];
+  }
+
+  @override
+  void dispose() {
+    _ctl?.dispose();
+    super.dispose();
   }
 
   @override
@@ -72,7 +77,7 @@ class _FlutterColorsBorderState extends State<FlutterColorsBorder>
               child: widget.child),
           CustomPaint(
             size: widget.size,
-            painter: _BorderPainter(_ctl!, colors!, widget.borderWidth,
+            painter: _BorderPainter(_ctl!, colors, widget.borderWidth,
                 boardRadius: widget.boardRadius),
           )
         ],
