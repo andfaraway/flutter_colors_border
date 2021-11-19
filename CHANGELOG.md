@@ -9,3 +9,7 @@
 ## 0.0.3
 
 * Add available argument.
+
+## 0.0.3+1
+
+* Bug fixes.

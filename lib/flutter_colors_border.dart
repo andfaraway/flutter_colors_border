@@ -7,7 +7,7 @@ class FlutterColorsBorder extends StatefulWidget {
   final Size size;
   final bool animation;
   final int animationDuration;
-  final double? boardRadius;
+  final double boardRadius;
 
   final List<Color>? colors;
   final double borderWidth;
@@ -15,14 +15,14 @@ class FlutterColorsBorder extends StatefulWidget {
 
   const FlutterColorsBorder(
       {Key? key,
-      required this.child,
-      required this.size,
-      this.colors,
-      this.borderWidth = 2,
-      this.animation = true,
-      this.animationDuration = 5,
-      this.boardRadius = 5,
-      this.available = true})
+        required this.child,
+        required this.size,
+        this.colors,
+        this.borderWidth = 2,
+        this.animation = true,
+        this.animationDuration = 5,
+        this.boardRadius = 5,
+        this.available = true})
       : super(key: key);
 
   @override
@@ -38,7 +38,6 @@ class _FlutterColorsBorderState extends State<FlutterColorsBorder>
   @override
   void initState() {
     super.initState();
-    if(!widget.available) return;
     if (widget.animation) {
       _ctl = AnimationController(
           vsync: this, duration: Duration(seconds: widget.animationDuration))
@@ -49,32 +48,32 @@ class _FlutterColorsBorderState extends State<FlutterColorsBorder>
     }
 
     colors = widget.colors;
-    if (colors == null) {
-      colors = [
-        Colors.red,
-        Colors.orange,
-        Colors.yellow,
-        Colors.green,
-        Colors.blue,
-        Colors.indigo,
-        Colors.purple
-      ];
-    }
+    colors ??= [
+      Colors.red,
+      Colors.orange,
+      Colors.yellow,
+      Colors.green,
+      Colors.blue,
+      Colors.indigo,
+      Colors.purple
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    if(!widget.available) return widget.child;
+    if (!widget.available) return widget.child;
     return SizedBox(
       width: widget.size.width,
       height: widget.size.height,
       child: Stack(
         children: [
-          widget.child,
+          ClipRRect(
+              borderRadius: BorderRadius.circular(widget.boardRadius),
+              child: widget.child),
           CustomPaint(
             size: widget.size,
             painter: _BorderPainter(_ctl!, colors!, widget.borderWidth,
-                boardRadius: widget.boardRadius!),
+                boardRadius: widget.boardRadius),
           )
         ],
       ),
@@ -94,7 +93,7 @@ class _BorderPainter extends CustomPainter {
       {this.boardRadius = 5})
       : super(repaint: ctl);
 
-  Paint _paint = Paint()..style = PaintingStyle.stroke;
+  final Paint _paint = Paint()..style = PaintingStyle.stroke;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -105,22 +104,22 @@ class _BorderPainter extends CustomPainter {
         .values
         .toList();
 
-    Offset center_pos = Offset(size.width / 2, size.height / 2);
+    Offset centerPos = Offset(size.width / 2, size.height / 2);
 
     _paint
       ..strokeWidth = strokeWidth
       ..strokeJoin = StrokeJoin.miter
-      ..shader = ui.Gradient.sweep(center_pos, colors, stops, TileMode.repeated,
+      ..shader = ui.Gradient.sweep(centerPos, colors, stops, TileMode.repeated,
           pi * 2 * ctl.value, pi * 2 * (1 + ctl.value));
 
     canvas.drawDRRect(
         RRect.fromRectAndRadius(
             Rect.fromCenter(
-                center: center_pos, width: size.width, height: size.height),
+                center: centerPos, width: size.width, height: size.height),
             Radius.circular(boardRadius)),
         RRect.fromRectAndRadius(
             Rect.fromCenter(
-                center: center_pos,
+                center: centerPos,
                 width: size.width - 2,
                 height: size.height - 2),
             Radius.circular(boardRadius)),
