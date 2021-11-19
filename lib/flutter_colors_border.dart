@@ -11,6 +11,7 @@ class FlutterColorsBorder extends StatefulWidget {
 
   final List<Color>? colors;
   final double borderWidth;
+  final bool available;
 
   const FlutterColorsBorder(
       {Key? key,
@@ -20,7 +21,8 @@ class FlutterColorsBorder extends StatefulWidget {
       this.borderWidth = 2,
       this.animation = true,
       this.animationDuration = 5,
-      this.boardRadius = 5})
+      this.boardRadius = 5,
+      this.available = true})
       : super(key: key);
 
   @override
@@ -36,7 +38,7 @@ class _FlutterColorsBorderState extends State<FlutterColorsBorder>
   @override
   void initState() {
     super.initState();
-
+    if(!widget.available) return;
     if (widget.animation) {
       _ctl = AnimationController(
           vsync: this, duration: Duration(seconds: widget.animationDuration))
@@ -62,6 +64,7 @@ class _FlutterColorsBorderState extends State<FlutterColorsBorder>
 
   @override
   Widget build(BuildContext context) {
+    if(!widget.available) return widget.child;
     return SizedBox(
       width: widget.size.width,
       height: widget.size.height,

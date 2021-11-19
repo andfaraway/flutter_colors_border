@@ -23,6 +23,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: FlutterColorsBorder(
+          available: false,
           size: Size(100,100),
           boardRadius: 5,
           child: Center(

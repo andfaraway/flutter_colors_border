@@ -5,3 +5,7 @@
 ## 0.0.2
 
 * Add boardRadius argument.
+
+## 0.0.3
+
+* Add available argument.
