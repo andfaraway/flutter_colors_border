@@ -24,7 +24,8 @@ class FlutterColorsBorder extends StatefulWidget {
           Colors.green,
           Colors.blue,
           Colors.indigo,
-          Colors.purple
+          Colors.purple,
+          Colors.black
         ],
         this.borderWidth = 2,
         this.animation = true,
