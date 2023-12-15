@@ -17,3 +17,7 @@
 ## 0.0.3+2
 
 * Bug fixes.
+
+## 0.0.4
+
+* Upgrade gradle.
